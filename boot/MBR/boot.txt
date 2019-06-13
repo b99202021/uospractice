@@ -1,0 +1,2 @@
+start_sector equ 0x2
+load_address equ 0x900

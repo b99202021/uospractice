@@ -1,0 +1,35 @@
+; this is the main booting MBR
+; magic number for BIOS to load MBR at 0x7c
+
+section MBR vstart=0x7c00
+    mov ax, cs
+    mov ds, ax
+    mov es, ax
+    mov ss, ax
+    mov sp, 0x7c00
+
+    mov ax, 0x600
+    mov bx, 0x700
+    mov cx, 0
+    mov dx, 0x184f
+
+    int 0x10
+
+; display
+    mov ah, 3
+    mov bh, 0
+    int 0x10
+
+    mov ax, message
+    mov bp, ax
+
+    mov cx, 15
+    mov ax, 0x1301
+    mov bx, 0x2
+    int 0x10
+
+    jmp $
+
+    message db "TW os is coming!"
+    times 510-($-$$) db 0
+    db 0x55, 0xaa
