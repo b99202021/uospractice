@@ -1,9 +1,0 @@
-as linking to the print.o file
-
-the __stack_chk_fail_local error occurs
-
-as this error is happening due to the stack protector
-
-we have to disable the stack protector using -fno-stack-protector
-
-for all the linking file

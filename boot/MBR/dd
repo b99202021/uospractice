@@ -1,1 +1,0 @@
-dd if=./EMBR.bin of=/home/twchang/microos/bochs/64M.img bs=512 count=1 conv=notrunc
