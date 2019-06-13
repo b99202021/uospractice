@@ -1,8 +1,10 @@
 
-build_dir = /home/twchang/microos/uos/kernel
+Dir := /home/twchang/microos/uos/kernel
 
-eflags = -c -m32 -fno-stack-protector -fno-builtin -I $(build_dir)/print -I $(build_dir)/int -I $(build_dir)/bitmap -I $(build_dir)/thread -I $(build_dir)/timer -I $(build_dir)/lib/list \
--I $(build_dir)/console -I $(build_dir)/keyboard
+# Dir := ..
+
+eflags = -c -m32 -fno-stack-protector -fno-builtin -I $(Dir)/print -I $(Dir)/int -I $(Dir)/bitmap -I $(Dir)/thread -I $(Dir)/timer -I $(Dir)/lib/list \
+-I $(Dir)/console -I $(Dir)/keyboard
 
 ioqueue.o: ioqueue.c
 	gcc $(eflags) $^ -o $@

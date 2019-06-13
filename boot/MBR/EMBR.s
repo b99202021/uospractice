@@ -1,5 +1,5 @@
 ; this is the main booting MBR
-; magic number for BIOS to load MBR at 0x7c
+; magic number for BIOS to load MBR at 0x7c00
 
 start_sector equ 0x2
 load_address equ 0x900

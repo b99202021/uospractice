@@ -3,6 +3,7 @@
 #include "SYNC.h"
 #include "global.h"
 #include "debug.h"
+#include "thread.h"
 
 // init the ioqueue
 void init_ioqueue (struct ioqueue * io_ptr){

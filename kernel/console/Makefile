@@ -1,5 +1,6 @@
+DIR := /home/twchang/microos/uos/kernel
 
-DIR = /home/twchang/microos/uos/kernel
+# Dir := ../
 
 eflags = -m32 -c -I . -I $(DIR)/thread -I $(DIR)/print -I $(DIR)/lib/list -I $(DIR)/int -fno-stack-protector -fno-builtin
 

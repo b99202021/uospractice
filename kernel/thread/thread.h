@@ -7,6 +7,8 @@
 
 typedef void thread_func(void *);
 
+typedef int16_t pid_t;
+
 // task_status is used in PCB
 enum task_status{
     TASK_RUNNING,
@@ -66,6 +68,8 @@ struct thread_stack {
 struct task_struct{
 // the kernel thread's stack 
     uint32_t * self_kstack;
+// the pid of the task
+    pid_t pid;
     enum task_status status;
 // the thread priority
     uint8_t priority;
@@ -82,6 +86,8 @@ struct task_struct{
     uint32_t * pg_dir;
 // the virtual bitmap for user prog
     struct vaddr_bitmap userprog_vaddr;
+// user memory block description (per process per block description)
+    struct mem_block_desc u_block_desc[DESC_CNT];
 // the magic number that we used to check if the task_struct is destroyed
     uint32_t stack_protector;
 };

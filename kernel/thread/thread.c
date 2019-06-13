@@ -25,9 +25,21 @@ struct task_struct * main_thread_ptr;
 // storage of the _node in the ready list ?????? (i don't understand why here)
 struct _node * thread_node_ptr;
 
+// the lock of the pid
+struct LOCK pid_lock;
+
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+// allocate pid for the thread
+static pid_t allocate_pid(){
+    static pid_t next_pid = 0;
+    acquire_lock(&pid_lock);
+    next_pid ++;
+    release_lock(&pid_lock);
+    return next_pid;
+}
 
 // return the task_struct pointer of the running thread
 struct task_struct * running_thread(){
@@ -67,7 +79,10 @@ void thread_create(struct task_struct * pthread_ptr, thread_func function, void 
 
 // init the basic informations for the thread
 void init_thread(struct task_struct * pthread_ptr,char * name,int prio){
+// clear the page
     memset(pthread_ptr,0,PAGE_SIZE);
+// get the pid for the thread
+    pthread_ptr->pid = allocate_pid();
     strcpy(pthread_ptr->name,name);
 
 // main thread and other thread
@@ -182,6 +197,8 @@ void sched(){
 void thread_init(){
     _list_init(&thread_ready_list);
     _list_init(&thread_all_list);
+// init the pid lock
+    init_lock(&pid_lock);
     make_main_thread();
 }
 

@@ -99,7 +99,8 @@ void process_execute(void * filename,char * name){
     thread_create(thread,start_process,filename);
 // create the page directory
     thread->pg_dir = create_page_dir();
-
+// initialization of the memory block description (u_block_desc is the pointer) 
+    block_desc_init(thread->u_block_desc);
 // put the thread into the ready list
     int intr = intr_status();
     intclose();

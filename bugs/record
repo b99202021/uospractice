@@ -1,0 +1,19 @@
+1. forget to disable interrupt while linklist operation
+
+2. the page allocation misuse between & and &&
+
+3. after modification of the thread header file, we have to recompile all the object file related to the header file
+
+
+
+
+
+
+
+
+
+
+
+
+
+

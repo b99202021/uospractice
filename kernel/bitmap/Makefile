@@ -2,9 +2,11 @@
 
 all: bitmap.o
 
-build_dir:= /home/twchang/microos/uos/kernel
+Dir:= /home/twchang/microos/uos/kernel
 
-eflags = -m32 -c -I . -I $(build_dir)/lib/list -I $(build_dir)/int -I $(build_dir)/print -I $(build_dir)/lib/string -I $(build_dir)/thread -fno-builtin -fno-stack-protector
+# Dir := ../
+
+eflags = -m32 -c -I . -I $(Dir)/lib/list -I $(Dir)/int -I $(Dir)/print -I $(Dir)/lib/string -I $(Dir)/thread -fno-builtin -fno-stack-protector
 
 CC=gcc
 

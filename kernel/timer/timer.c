@@ -31,14 +31,21 @@ void timer_init(){
     register_handler(0x20,(void *)intr_timer_handler);
 }
 
+// how many time interrupt come since the computer boot 
 uint32_t ticks;
 
 static void intr_timer_handler(){
     struct task_struct * cur_thread = running_thread();
 
+// ensure that the stack have not overflow to the stack protector
+
     ASSERT(cur_thread->stack_protector = 0x19920706);
 
     cur_thread->elapsed_ticks++;
+
+// we also need to increase the ticks for the ticks
+
+    ticks++;
 
     if(cur_thread->ticks == 0)
         sched();

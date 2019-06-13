@@ -1,6 +1,8 @@
 CC=gcc
 
-build_dir=/home/twchang/microos/uos/kernel
+Dir := /home/twchang/microos/uos/kernel
+
+# Dir := ../
 
 eflags= -m32 -c -I . -I ../print -fno-builtin -fno-stack-protector
 

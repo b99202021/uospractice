@@ -4,7 +4,9 @@
 #include "print.h"
 
 // there are 33 interrupt service routine here
-#define IDT_DESC_CNT 48
+//#define IDT_DESC_CNT 48
+
+#define IDT_DESC_CNT 0x81
 
 //here is the control for 8259A (interrupt controller)
 #define PIC_M_CRTL 0x20
@@ -14,6 +16,9 @@
 
 //eflags register if ==1
 #define EFLAGS_IF 0x200
+
+// get syscall handler (soft interrupt int 0x80)
+extern uint32_t syscall_handler();
 
 typedef void * intr_handler;
 
@@ -50,6 +55,10 @@ static void idt_desc_init(void){
     for(i=0;i<IDT_DESC_CNT;i++){
         make_idt_desc(&idt[i],IDT_ATTR_DPL0,intr_entry_table[i]);
     }
+
+    // make idt desc for the soft interrupt int 0x80
+    make_idt_desc(&idt[IDT_DESC_CNT-1],IDT_ATTR_DPL3,syscall_handler);
+
     put_str("idt is established!!! \n");
 }
 
@@ -66,7 +75,7 @@ static void pic_init(void){
     outb (PIC_S_DATA, 0x02);
     outb (PIC_S_DATA, 0x01);
     
-    // only open the time-interrupt
+    // only open the time-interrupt & keyboard interrupt
     outb (PIC_M_DATA, 0xfc);
     outb (PIC_S_DATA, 0xff);
 

@@ -1,5 +1,5 @@
 //notice that for the purpose of efficiency we should make all the function call inline
-//as i didnt owing to the simplicity
+//as i did not owing to the simplicity
 
 #ifndef __LIB_IO_H
 #define __LIB_IO_H
@@ -7,6 +7,7 @@
 #include"stdint.h"
 
 static void outb(uint16_t port, uint8_t data){
+// tje rep means repeat until ecx equals to zero while "+" means first written
     asm volatile(
     "outb %b0, %w1"
     :

@@ -119,4 +119,50 @@ VECTOR 46,ZERO
 VECTOR 47,ZERO
 VECTOR 48,ZERO
 
+;---------------------------------------this is for 0x80 interrupt 
+
+[bits 32]
+
+extern syscall_table
+
+section .text
+
+global syscall_handler
+
+syscall_handler:
+
+;go into the syscall
+    push 0
+    
+    push ds
+    push es
+    push fs
+    push gs
+
+;---------------------------------------push all the registers into stack
+    pushad
+
+    push 0x80
+
+;---------------------------------------the parameters for syscalls
+    push eax
+    push ecx
+    push ebx
+
+;---------------------------------------call syscall handler
+    call [syscall_table + eax * 4]
+
+;---------------------------------------please remeber to add the stack back to place
+    add esp, 12
+    
+;---------------------------------------set the return value for syscall to eax
+    mov [esp + 8*4], eax
+    
+    jmp intr_exit
+
+
+
+
+
+
 

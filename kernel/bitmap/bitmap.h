@@ -22,6 +22,7 @@ struct memory_pool {
     struct LOCK lock;
 };
 
+// virtual memeory bitmap
 struct vaddr_bitmap{
     struct bitmap vbitmap;
 // the start of the vaddr which is 0x00100000
@@ -32,12 +33,34 @@ enum pool{
     kernel,user
 };
 
+// structure of memory block ()
+struct mem_block{
+    struct _node free_node;
+};
+
+// description of the meemory block
+struct mem_block_desc{
+    uint32_t block_size;
+    uint32_t block_per_arena;
+    struct _list free_list;
+};
+
+// how many different kind of memeory block size we r providing
+#define DESC_CNT 7
+
+// the structure of the arena (providing the space for malloc)
+struct arena{
+// the description of the arena
+    struct mem_block_desc * desc;
+    uint32_t cnt;
+// if the arena provide memory larger than 1024 byte
+    int large;
+};
 
 //-----------------------------------------------------------function declaration
 
-
 // this function set the bitmap bit for 1 or 0
-void bitmap_set( struct bitmap *,uint32_t,uint8_t ) ;
+void bitmap_set( struct bitmap *, uint32_t , uint8_t ) ;
 
 // clear the bitmap to zero
 void bitmap_init(struct bitmap *) ;
@@ -70,7 +93,7 @@ void * palloc(struct memory_pool *);
 void page_table_add(void * ,void * );
 
 // this function return vaddr for cnt continuous memory
-void * malloc(enum pool,uint32_t);
+void * malloc_page(enum pool,uint32_t);
 
 // get cnt page memory for kernel memory and reset the memory to zero and return the address
 void * get_kernel_pages(uint32_t);
@@ -82,4 +105,7 @@ void * get_a_page(enum pool,uint32_t);
 
 // get the physical address for virtual address
 uint32_t addr_v2p(uint32_t);
+
+// the block description initialization
+void block_desc_init(struct mem_block_desc *);
 #endif
